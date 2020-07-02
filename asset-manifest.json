@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/OldSchoolFilter/static/css/main.4f87b136.chunk.css",
+    "main.js": "/OldSchoolFilter/static/js/main.d6304500.chunk.js",
+    "main.js.map": "/OldSchoolFilter/static/js/main.d6304500.chunk.js.map",
+    "runtime-main.js": "/OldSchoolFilter/static/js/runtime-main.3a0536f1.js",
+    "runtime-main.js.map": "/OldSchoolFilter/static/js/runtime-main.3a0536f1.js.map",
+    "static/js/2.c20eeec3.chunk.js": "/OldSchoolFilter/static/js/2.c20eeec3.chunk.js",
+    "static/js/2.c20eeec3.chunk.js.map": "/OldSchoolFilter/static/js/2.c20eeec3.chunk.js.map",
+    "index.html": "/OldSchoolFilter/index.html",
+    "precache-manifest.52e595b969c2cd5b3ab6297ad0da66c1.js": "/OldSchoolFilter/precache-manifest.52e595b969c2cd5b3ab6297ad0da66c1.js",
+    "service-worker.js": "/OldSchoolFilter/service-worker.js",
+    "static/css/main.4f87b136.chunk.css.map": "/OldSchoolFilter/static/css/main.4f87b136.chunk.css.map",
+    "static/js/2.c20eeec3.chunk.js.LICENSE.txt": "/OldSchoolFilter/static/js/2.c20eeec3.chunk.js.LICENSE.txt",
+    "static/media/default.jpg": "/OldSchoolFilter/static/media/default.7d1f8fbc.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3a0536f1.js",
+    "static/js/2.c20eeec3.chunk.js",
+    "static/css/main.4f87b136.chunk.css",
+    "static/js/main.d6304500.chunk.js"
+  ]
+}
