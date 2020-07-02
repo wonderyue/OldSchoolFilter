@@ -23,7 +23,9 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "test": "craco test"
+    "test": "craco test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -51,6 +53,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^4.0.5"
-  }
+    "eslint-plugin-react-hooks": "^4.0.5",
+    "gh-pages": "^3.1.0"
+  },
+  "homepage": "https://wonderyue.github.io/OldSchoolFilter"
 }
