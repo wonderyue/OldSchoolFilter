@@ -1,16 +1,24 @@
-import React, { Fragment, useState, useContext, useRef } from "react";
+import React, {
+  Fragment,
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+} from "react";
 import {
   InboxOutlined,
   DownloadOutlined,
   DeleteOutlined,
 } from "@ant-design/icons";
-import { Upload, Button, Row, Col, Space } from "antd";
+import { Upload, Button, Row, Col, Space, Popover } from "antd";
 import Filter from "./Filter";
 import { AppContext } from "./App";
 import defaultImage from "./default.jpg";
+import FilterSider from "./FilterSider";
+import { ORIGINAL, ShaderList } from "./Shaders";
 
-const MAX_WIDTH = 800;
-const MAX_HEIGHT = 600;
+const MAX_WIDTH = 560;
+const MAX_HEIGHT = 420;
 
 export default function FilterPage() {
   const {
@@ -20,13 +28,15 @@ export default function FilterPage() {
     setWidth,
     height,
     setHeight,
-    curShader,
+    shaderIndex,
   } = useContext(AppContext);
 
   const [pixelRatio, setPixelRatio] = useState(1);
   const filterRef = useRef();
 
-  handleImageLoaded(defaultImage);
+  useEffect(() => {
+    handleImageLoaded(defaultImage);
+  }, []);
 
   function handleImageLoaded(base64) {
     const image = new Image();
@@ -85,16 +95,50 @@ export default function FilterPage() {
   function renderUploaded() {
     return (
       <Fragment>
-        <Row justify="center">
+        <Row justify="center" gutter={32}>
           <Col>
             <Filter
               width={width / pixelRatio}
               height={height / pixelRatio}
               pixelRatio={pixelRatio}
-              shaderName={curShader}
+              shader={ORIGINAL}
               ref={filterRef}
             />
           </Col>
+          <Popover
+            content={
+              <p>
+                shader porting from
+                <Button
+                  type="link"
+                  onClick={() => window.open(ShaderList[shaderIndex].link)}
+                >
+                  {ShaderList[shaderIndex].reference}
+                </Button>
+              </p>
+            }
+            title={ShaderList[shaderIndex].name}
+            placement="bottomRight"
+            mouseEnterDelay={ShaderList[shaderIndex].reference ? 0.1 : 600}
+          >
+            <Col>
+              <Filter
+                width={width / pixelRatio}
+                height={height / pixelRatio}
+                pixelRatio={pixelRatio}
+                shader={ShaderList[shaderIndex].shader}
+                ref={filterRef}
+              />
+            </Col>
+          </Popover>
+        </Row>
+        <Row
+          justify="center"
+          style={{
+            padding: "20px 20px",
+          }}
+        >
+          <FilterSider />
         </Row>
         <Row justify="center">
           <Space>

@@ -7,7 +7,6 @@ import React, {
 } from "react";
 import { Node } from "gl-react";
 import { Surface } from "gl-react-dom";
-import { ShaderMap } from "./Shaders";
 import { AppContext } from "./App";
 var FileSaver = require("file-saver");
 
@@ -32,7 +31,7 @@ function Filter(props, ref) {
         pixelRatio={props.pixelRatio}
       >
         <Node
-          shader={ShaderMap[props.shaderName].shader}
+          shader={props.shader}
           uniforms={{
             tex: rawImage,
             iTime: 1.0,
