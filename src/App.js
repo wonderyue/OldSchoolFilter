@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import FilterPage from "./FilterPage";
-import FilterSider from "./FilterSider";
 import "./App.less";
 import { Layout, Menu } from "antd";
 import { CameraFilled } from "@ant-design/icons";
 
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 export const AppContext = React.createContext({});
 
@@ -13,7 +12,7 @@ function App() {
   const [rawImage, setRawImage] = useState(null);
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
-  const [curShader, setCurShader] = useState("ORIGINAL");
+  const [shaderIndex, setShaderIndex] = useState(0);
 
   return (
     <AppContext.Provider
@@ -24,8 +23,8 @@ function App() {
         setWidth,
         height,
         setHeight,
-        curShader,
-        setCurShader,
+        shaderIndex,
+        setShaderIndex,
       }}
     >
       <div className="App">
@@ -40,22 +39,12 @@ function App() {
           <Layout>
             <Content
               style={{
-                padding: "20px 20px",
+                padding: "20px 0px",
                 minHeight: document.documentElement.clientHeight - 134,
               }}
             >
               <FilterPage />
             </Content>
-            {rawImage ? (
-              <Sider
-                width={240}
-                style={{
-                  padding: "20px 20px",
-                }}
-              >
-                <FilterSider />
-              </Sider>
-            ) : null}
           </Layout>
           <Footer style={{ textAlign: "center" }}>
             Old School Filter ©2020 Created by Wenduo Yue

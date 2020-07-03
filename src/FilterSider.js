@@ -1,50 +1,45 @@
-import React, { Fragment, useState, useContext, useEffect } from "react";
-import { Radio, Row, Col, Divider } from "antd";
+import React, { useState, useContext, useEffect } from "react";
+import { Radio, Row, Col } from "antd";
 import { AppContext } from "./App";
-import { ShaderMap } from "./Shaders";
+import { ShaderList } from "./Shaders";
 import Filter from "./Filter";
 
-const MAX_WIDTH = 200;
-const MAX_HEIGHT = 150;
+const MAX_WIDTH = 120;
+const MAX_HEIGHT = 90;
 
 export default function FilterSider() {
-  const { width, height, setCurShader } = useContext(AppContext);
+  const { width, height, shaderIndex, setShaderIndex } = useContext(AppContext);
   const [pixelRatio, setPixelRatio] = useState(1);
-  const [selectedValue, setSelectedValue] = useState(0);
 
   useEffect(() => {
     setPixelRatio(Math.max(1, width / MAX_WIDTH, height / MAX_HEIGHT));
   }, [width, height]);
 
   function onChange(value) {
-    setSelectedValue(value);
-    setCurShader(Object.keys(ShaderMap)[value]);
+    setShaderIndex(value);
   }
 
   return (
-    <Row justify="center" align="middle" gutter={[32, 32]}>
-      <Radio.Group
-        onChange={(e) => onChange(e.target.value)}
-        value={selectedValue}
-      >
-        {Object.keys(ShaderMap).map((shaderName, index) => {
+    <Radio.Group onChange={(e) => onChange(e.target.value)} value={shaderIndex}>
+      <Row justify="center" align="middle" gutter={32}>
+        {ShaderList.map((item, index) => {
           return (
-            <Col key={index} onClick={() => onChange(index)} value={index}>
+            <Col key={index} onClick={() => onChange(index)}>
               <Row justify="center">
                 <Filter
                   width={width / pixelRatio}
                   height={height / pixelRatio}
                   pixelRatio={pixelRatio}
-                  shaderName={shaderName}
+                  shader={item.shader}
                 />
               </Row>
               <Row justify="center">
-                <Radio value={index}>{shaderName}</Radio>
+                <Radio value={index}>{item.name}</Radio>
               </Row>
             </Col>
           );
         })}
-      </Radio.Group>
-    </Row>
+      </Row>
+    </Radio.Group>
   );
 }

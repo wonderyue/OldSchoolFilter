@@ -3,20 +3,20 @@ import { Shaders, GLSL } from "gl-react";
 const shaders = Shaders.create({
   ORIGINAL: {
     frag: GLSL`
-              precision mediump float;
-              uniform sampler2D tex;
-              varying vec2 uv;
-      
-              void main()
-              {
-                  vec3 col = texture2D( tex, uv ).xyz;
-                  gl_FragColor = vec4(col, 1.0);
-              }
-          `,
+          precision highp float;
+          uniform sampler2D tex;
+          varying vec2 uv;
+
+          void main()
+          {
+              vec3 col = texture2D( tex, uv ).xyz;
+              gl_FragColor = vec4(col, 1.0);
+          }
+      `,
   },
   CRT: {
     frag: GLSL`
-          precision mediump float;
+          precision highp float;
           uniform sampler2D tex;
           uniform float iTime;
           varying vec2 uv;
@@ -80,7 +80,7 @@ const shaders = Shaders.create({
       
         void main()
         {
-            highp float magnitude = 0.000003;
+            highp float magnitude = 0.000008;
         
             // Set up offset
             vec2 offsetRedUV = uv;
@@ -103,19 +103,50 @@ const shaders = Shaders.create({
         }
     `,
   },
+  Cyberpunk: {
+    frag: GLSL`
+        precision highp float;
+        uniform sampler2D tex;
+        varying vec2 uv;
+        
+        void main()
+        {
+            vec3 oricol = texture2D( tex, uv ).xyz;
+            vec3 col = texture2D( tex, uv ).rgb;
+            float oldx = col.x;
+            float oldy = col.y;
+            float add = abs(oldx - oldy)*0.5;
+            float stepxy = step(col.y, col.x);
+            float stepyx = 1.0 - stepxy;
+            col.x = stepxy * (oldx + add) + stepyx * (oldx - add);
+            col.y = stepyx * (oldy + add) + stepxy * (oldy - add);
+            col.z = sqrt(col.z);
+            col = mix(texture2D( tex, uv ).rgb, col, 1.0);
+            gl_FragColor = vec4(col, 1.0);
+        }
+    `,
+  },
 });
 
-export const ShaderMap = {
-  ORIGINAL: {
-    reference: "",
-    shader: shaders.ORIGINAL,
-  },
-  CRT: {
-    reference: "[MattiasCRT](https://www.shadertoy.com/view/Ms23DR)",
+export const ORIGINAL = shaders.ORIGINAL;
+
+export const ShaderList = [
+  {
+    name: "CRT",
+    reference: "MattiasCRT",
+    link: "https://www.shadertoy.com/view/Ms23DR",
     shader: shaders.CRT,
   },
-  VHS: {
-    reference: "[VHS Shader](https://www.shadertoy.com/view/MsK3zw)",
+  {
+    name: "VHS",
+    reference: "VHS Shader",
+    link: "https://www.shadertoy.com/view/MsK3zw",
     shader: shaders.VHS,
   },
-};
+  {
+    name: "Cyberpunk",
+    reference: null,
+    link: null,
+    shader: shaders.Cyberpunk,
+  },
+];
